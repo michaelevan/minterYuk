@@ -1,0 +1,105 @@
+<?php
+session_start();
+include("../Bootstrap/b.php");
+include("../System/connect.php");
+include("../System/check.php");
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor</title>
+    <?php include("../System/head.php") ?>
+    <style>
+        body {
+            background-color: #343f4b;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="preloader">
+            <img src="../Bootstrap/images/preloader.gif" alt="preloader">
+        </div>
+    </div>
+    <?php include("../System/nav3.php") ?>
+    <section class="page-title-section overlay" data-background="../Bootstrap/images/backgrounds/page-title.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-inline custom-breadcrumb">
+                        <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="@@page-link">List Mentor</a></li>
+                        <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section ">
+        <div class='container'>
+            <div class="table-responsive-lg">
+                <table class="table table-striped" id="admin">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">No Telp</th>
+                            <th scope="col">Skill</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $n = 1;
+                        $datamentor = $conn->query("SELECT * FROM mentor")->fetchAll();
+                        for ($i = 0; $i < count($datamentor); $i++) {
+                        ?>
+                            <tr>
+                                <td><?= $n ?></td>
+                                <td><?= $datamentor[$i]["namalengkap_mentor"] ?></td>
+                                <td><?= $datamentor[$i]["tg_lahirmentor"] ?></td>
+                                <td><?= $datamentor[$i]["alamat_mentor"] ?></td>
+                                <td><?php if ($datamentor[$i]["jk_mentor"] == "P") {
+                                        echo "Perempuan";
+                                    } else {
+                                        echo "Laki-Laki";
+                                    } ?></td>
+                                <td><?= $datamentor[$i]["notelp_mentor"] ?></td>
+                                <td><?= $datamentor[$i]["skill"] ?></td>
+                            </tr>
+                        <?php
+                            $n++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <?php
+    include("../System/footer.php");
+    include("../System/bot.php");
+    ?>
+    <link rel="stylesheet" href="../Bootstrap/dataTables.bootstrap4.min.css">
+    <script src="../Bootstrap/jquery.dataTables.js"></script>
+    <script src="../Bootstrap/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $("#admin").DataTable();
+    </script>
+    </script>
+    <script src="../System/jquery.js"></script>
+    <script>
+        for (let index = 1; index < 7; index++) {
+            if (index == 5) {
+                $("#n" + index).addClass("active");
+            } else {
+                $("#n" + index).removeClass("active");
+            }
+        }
+    </script>
